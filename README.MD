@@ -18,6 +18,7 @@ https://www.rust-lang.org/tools/install
     - rust compiler command: **rustc**
     - rust package manager: **cargo**
     - rust toolchain (used for switching rust versions): **rustup**
+    - * if you can't run ```rustc --version``` then you may need to add your ~./cargo to PATH or ENVIRONMENT
 
 ## Starting your project
 1. Open a terminal/console in the directory where you want your project to be created
