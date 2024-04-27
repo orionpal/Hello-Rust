@@ -23,11 +23,11 @@ https://www.rust-lang.org/tools/install
 ## Starting your project
 1. Open a terminal/console in the directory where you want your project to be created
 2. run in terminal:
-    - cargo new {project_name}
+    - ```cargo new {project_name}```
 3. You should now have a very basic project structure:
     - **Cargo.toml**: handles dependencies
     - **src**: directory to contain source code
-    - **main.rs**: located in src and will be what is run when you compile the project
+    - **src/main.rs**: located in src and will be what is run when you compile the project
 
 following tutorial:
 https://doc.rust-lang.org/rust-by-example/hello.html
