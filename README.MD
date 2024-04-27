@@ -1,4 +1,5 @@
 DONE ON WINDOWS 10
+soon to be tested on mac
 
 ## Covered Topics
 - Setting up Rust
