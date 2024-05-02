@@ -1,5 +1,4 @@
-DONE ON WINDOWS 10
-soon to be tested on mac
+Works on both Windows and Mac
 
 ## Covered Topics
 - Setting up Rust
@@ -47,8 +46,8 @@ and then running:
 
 
 
-## Some stuff
+## Packages to be explored
 Criterion - benchmarking app
-Atomic - numbers?
+Atomic - numbers
 Yew - webassembly packaging
 rocket - framework for web api
