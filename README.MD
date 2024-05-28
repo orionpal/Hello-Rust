@@ -34,15 +34,23 @@ https://doc.rust-lang.org/rust-by-example/meta/doc.html
 
 rust file extension is .rs
 
-make sure dependencies are built: cargo build
+make sure dependencies are built: ```cargo build```
 
 to compile a file, type this into console:
-rustc filename.rs
-This creates an executable (.exe) file
+
+```rustc filename.rs```
+
+for example,
+
+```rustc src/main.rs```
+
+This creates an executable file
 
 
 and then running:
 ./filename
+
+will execute the file
 
 
 
