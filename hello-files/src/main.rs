@@ -17,7 +17,7 @@ fn main() -> io::Result<()> {
             }
             Some("json") => {
                 println!("This is a JSON file.");
-                // Add logic to handle JSON files here
+                file_utilities::testing::json_test::handle_json(file_path)?;
             }
             Some("txt") => {
                 println!("This is a text file.");

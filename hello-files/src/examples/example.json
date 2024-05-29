@@ -1,8 +1,12 @@
 {
-    "example_key" : "example_value",
-    "example_nest" : {
-        "nest1" : "numba one",
-        "nest2" : "numba twoooo"
-    },
-    "example_array" : ["val 1", "val 2"] 
+  "example_key": "example_value",
+  "example_number": 4,
+  "example_nest": {
+    "nest1": "numba one",
+    "nest2": "numba twoooo"
+  },
+  "example_array": [
+    "val 1",
+    "val 2"
+  ]
 }

@@ -1,23 +1,40 @@
-use serde::{Deserialize, Serialize};
+use serde::de::DeserializeOwned;
+use serde::Serialize;
+use serde_json::Value;
+use std::fs;
+use std::io;
+use std::io::Write;
 
-#[derive(Serialize, Deserialize, Debug)]
-struct Person {
-    name: String,
-    age: u32,
-    email: String,
-}
+/*
+The DeserializeOwned trait is used because it ensures
+that the deserialized data does not borrow from the input data string.
 
-// Function to read JSON from a file
-fn read_json(file_path: &str) -> Result<Person> {
+This is important because the JSON string read from the file is a
+temporary variable inside the function.
+
+If the deserialized type borrowed data from this string,
+the references would be invalid once the function exits.
+By requiring DeserializeOwned, we ensure that the deserialized type fully owns its data,
+avoiding potential lifetime issues.
+*/
+// Function to read JSON from a file where we know the form as some struct of type T
+pub fn read_json<T: DeserializeOwned>(file_path: &String) -> Result<T, io::Error> {
     let data = fs::read_to_string(file_path)?;
-    let person: Person = serde_json::from_str(&data)?;
-    Ok(person)
+    let obj: T = serde_json::from_str(&data)?;
+    Ok(obj)
 }
 
-// Function to write JSON to a file
-fn write_json(file_path: &str, person: &Person) -> Result<()> {
-    let json_data = serde_json::to_string_pretty(person)?;
-    let mut file = File::create(file_path)?;
-    file.write_all(json_data.as_bytes())?;
+pub fn read_some_json(file_path: &String) -> Result<Value, io::Error> {
+    let data = fs::read_to_string(file_path).expect("Unable to read file");
+    let json: Value = serde_json::from_str(&data)?;
+    Ok(json)
+}
+pub fn write_json<T: Serialize>(file_path: &str, data: &T) -> Result<(), io::Error> {
+    // Serialize the data to a JSON string
+    let json_string = serde_json::to_string_pretty(data)?;
+    
+    let mut file = fs::File::create(file_path)?;
+    file.write_all(json_string.as_bytes())?;
+
     Ok(())
 }
