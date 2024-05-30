@@ -17,7 +17,7 @@ struct Nest {
     nest2: String
 }
 
-pub fn handle_json(file_path: &String) -> io::Result<()> {
+pub fn handle_json(file_path: &str) -> io::Result<()> {
     // Known struct serialization
     println!("Here we try reading from the json into our known struct:");
     let example: Example = json_utility::read_json::<Example>(file_path)?;

@@ -8,6 +8,7 @@ Works on both Windows and Mac
     - printing to console
     - reading input from console
 - Compiling Rust project
+- See project folders for examples
 
 ## Setting up Rust
 1. download the rust installer here:
@@ -28,10 +29,11 @@ https://www.rust-lang.org/tools/install
     - **src**: directory to contain source code
     - **src/main.rs**: located in src and will be what is run when you compile the project
 
-following tutorial:
-https://doc.rust-lang.org/rust-by-example/hello.html
-https://doc.rust-lang.org/rust-by-example/meta/doc.html
+## Trying out the examples
+In each project folder there is a readme with instructions on what's covered and the usage. Make sure you're in that directory when running commands. There are comments in the code to try and lead the logic a bit
 
+
+## Basics
 rust file extension is .rs
 
 make sure dependencies are built: ```cargo build```
@@ -44,7 +46,13 @@ for example,
 
 ```rustc src/main.rs```
 
-This creates an executable file
+This creates an executable file.
+
+If there are dependencies you should run:
+
+```cargo build```
+
+And the executable will be found in target/debug and will be the name of the project
 
 
 and then running:

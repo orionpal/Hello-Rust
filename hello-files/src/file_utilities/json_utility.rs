@@ -5,27 +5,16 @@ use std::fs;
 use std::io;
 use std::io::Write;
 
-/*
-The DeserializeOwned trait is used because it ensures
-that the deserialized data does not borrow from the input data string.
-
-This is important because the JSON string read from the file is a
-temporary variable inside the function.
-
-If the deserialized type borrowed data from this string,
-the references would be invalid once the function exits.
-By requiring DeserializeOwned, we ensure that the deserialized type fully owns its data,
-avoiding potential lifetime issues.
-*/
 // Function to read JSON from a file where we know the form as some struct of type T
-pub fn read_json<T: DeserializeOwned>(file_path: &String) -> Result<T, io::Error> {
+//The DeserializeOwned trait is used because it ensures the return object owns its data, not the file
+pub fn read_json<T: DeserializeOwned>(file_path: &str) -> Result<T, io::Error> {
     let data = fs::read_to_string(file_path)?;
     let obj: T = serde_json::from_str(&data)?;
     Ok(obj)
 }
 
-pub fn read_some_json(file_path: &String) -> Result<Value, io::Error> {
-    let data = fs::read_to_string(file_path).expect("Unable to read file");
+pub fn read_some_json(file_path: &str) -> Result<Value, io::Error> {
+    let data = fs::read_to_string(file_path)?;
     let json: Value = serde_json::from_str(&data)?;
     Ok(json)
 }

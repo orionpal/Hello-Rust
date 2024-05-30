@@ -3,7 +3,7 @@ use std::fs;
 use std::io;
 use std::io::Write;
 
-pub fn read_file(file_path: &String) -> Result<Vec<String>, io::Error> {
+pub fn read_file(file_path: &str) -> Result<Vec<String>, io::Error> {
     match fs::read_to_string(file_path) {
         Ok(file_content) => {
             let lines: Vec<String> = file_content.lines().map(|line| line.to_string()).collect();
@@ -16,7 +16,7 @@ pub fn read_file(file_path: &String) -> Result<Vec<String>, io::Error> {
     }
 }
 
-pub fn process_file(file_path: &String, process_line: &dyn Fn(&String)) -> Result<(), io::Error> {
+pub fn process_file(file_path: &str, process_line: &dyn Fn(&String)) -> Result<(), io::Error> {
     match fs::File::open(file_path) {
         Ok(file) => {
             let reader = io::BufReader::new(file);
@@ -39,7 +39,7 @@ pub fn process_file(file_path: &String, process_line: &dyn Fn(&String)) -> Resul
     }
 }
 
-pub fn write_file(file_path: &String, content: &String) -> Result<(), io::Error> {
+pub fn write_file(file_path: &str, content: &String) -> Result<(), io::Error> {
     let mut file = fs::File::create(file_path)?;
     file.write_all(content.as_bytes())?;
     Ok(())
