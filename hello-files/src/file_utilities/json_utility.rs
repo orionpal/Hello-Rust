@@ -5,6 +5,8 @@ use std::fs;
 use std::io;
 use std::io::Write;
 
+// This mainly takes advantage of the serde crate for json
+
 // Function to read JSON from a file where we know the form as some struct of type T
 //The DeserializeOwned trait is used because it ensures the return object owns its data, not the file
 pub fn read_json<T: DeserializeOwned>(file_path: &str) -> Result<T, io::Error> {

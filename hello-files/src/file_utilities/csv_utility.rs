@@ -10,12 +10,12 @@ use std::collections::HashMap;
 
 
 pub fn read_csv<T: DeserializeOwned>(file_path: &str) -> Result<Vec<T>, io::Error> {
-    // Open the CSV file
+    // 1. Open the CSV file
     let file = fs::File::open(file_path)?;
-    // Create a CSV reader
+    // 2. Create a CSV reader
     let mut rdr = ReaderBuilder::new().delimiter(b',').from_reader(file);
     
-    // Iterate over the records and collect them into a vector
+    // 3. Iterate over the records and collect them into a vector
     let mut records: Vec<T> = Vec::new();
     for result in rdr.deserialize() {
         let record: T = result?;
@@ -25,13 +25,14 @@ pub fn read_csv<T: DeserializeOwned>(file_path: &str) -> Result<Vec<T>, io::Erro
 }
 
 pub fn read_some_csv(file_path: &str) -> Result<Vec<HashMap<String, Value>>, io::Error> {
+    // 1. Open file
     let file = fs::File::open(file_path)?;
     let mut rdr = ReaderBuilder::new().from_reader(file);
     
-    // Get the headers
+    // 2. Get the headers
     let headers = rdr.headers()?.clone();
     
-    // Iterate over the records
+    // 3. Iterate over the records and populate a HashMap
     let mut records = Vec::new();
     for result in rdr.records() {
         let record = result?;
@@ -47,15 +48,15 @@ pub fn read_some_csv(file_path: &str) -> Result<Vec<HashMap<String, Value>>, io:
 }
 
 pub fn write_csv<T: Serialize>(file_path: &str, records: &Vec<T>) -> Result<(), io::Error>  {
-    // Create a CSV writer
+    // 1. Create a file
     let file = fs::File::create(file_path)?;
-    let mut wtr = Writer::from_writer(file);
 
-    // Write the records to the CSV file
+    // 2. Write the records to the CSV file
+    let mut wtr = Writer::from_writer(file);
     for record in records {
         wtr.serialize(record)?;
     }
-    // Flush writer buffer into file (careful there's a trailing \n)
+    // 3. Flush writer buffer into file (careful there's a trailing \n)
     wtr.flush()?;
 
     Ok(())

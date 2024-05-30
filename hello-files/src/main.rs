@@ -5,11 +5,11 @@ mod file_utilities;
 
 
 fn main() -> io::Result<()> {
+    // 1. Get args
     let args: Vec<String> = env::args().collect();
     if args.len() == 2 {
-        // Get arguments
         let file_path: &str =  &args[1];
-        // Get file extension, then convert to string, then match
+        // 2. Get file extension, then convert to string, then match
         match Path::new(file_path).extension().and_then(|ext| ext.to_str()){
             Some("csv") => {
                 println!("This is a CSV file.");

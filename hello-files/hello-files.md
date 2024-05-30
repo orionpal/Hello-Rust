@@ -11,6 +11,7 @@
 - When returning a Result that may or may not have worked, use "let value = result?;". the "?" either returns the successfully retrieved object or returns the error and exits the function
 - You can also use "match" when retrieving a value. matching to "Ok(val)" lets you directly use the val
 - When organizing your code, mod.rs should exist in the directories to define what's being shared
+- You can use generic type T in functions
 
 ## Running
 Try using:
