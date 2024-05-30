@@ -1,7 +1,7 @@
 use std::io;
 use crate::file_utilities::txt_utility;
 
-pub fn handle_txt(file_path: &String) -> io::Result<()> {
+pub fn handle_txt(file_path: &str) -> io::Result<()> {
     fn process_line(line: &String) {
         println!("Processed: {}", line)
     }
@@ -12,7 +12,7 @@ pub fn handle_txt(file_path: &String) -> io::Result<()> {
     println!("Length of our vector: {}", lines.len());
     println!("And here we write the contents to result.txt");
     let content: String = lines.join("\n");
-    let write_path: String = "result.txt".to_string();
-    txt_utility::write_file(&write_path, &content)?;
+    let write_path: &str = &"result.txt".to_string();
+    txt_utility::write_file(write_path, &content)?;
     Ok(())
 }

@@ -56,8 +56,8 @@ pub fn handle_json(file_path: &str) -> io::Result<()> {
 
     // Writing 
     println!("Here we try writing the contents to result.json");
-    let write_path: String = "result.json".to_string();
-    json_utility::write_json::<Example>(&write_path, &example)?;
+    let write_path: &str = &"result.json".to_string();
+    json_utility::write_json::<Example>(write_path, &example)?;
 
     Ok(())
 }

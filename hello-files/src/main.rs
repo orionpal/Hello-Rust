@@ -5,15 +5,15 @@ mod file_utilities;
 
 
 fn main() -> io::Result<()> {
-    let args: Vec<_> = env::args().collect();
+    let args: Vec<String> = env::args().collect();
     if args.len() == 2 {
         // Get arguments
-        let file_path: &String =  &args[1];
+        let file_path: &str =  &args[1];
         // Get file extension, then convert to string, then match
         match Path::new(file_path).extension().and_then(|ext| ext.to_str()){
             Some("csv") => {
                 println!("This is a CSV file.");
-                // Add logic to handle CSV files here
+                file_utilities::testing::csv_test::handle_csv(file_path)?;
             }
             Some("json") => {
                 println!("This is a JSON file.");

@@ -1,10 +1,11 @@
 use serde::de::DeserializeOwned;
 use serde::Serialize;
-use serde_json::{Value, Map};
+use serde_json::Value;
 use csv::ReaderBuilder;
 use csv::Writer;
 use std::fs;
 use std::io;
+use std::collections::HashMap;
 
 
 
@@ -23,7 +24,7 @@ pub fn read_csv<T: DeserializeOwned>(file_path: &str) -> Result<Vec<T>, io::Erro
     Ok(records)
 }
 
-pub fn read_some_csv(file_path: &String) -> Result<Vec<Map<String, Value>>, io::Error> {
+pub fn read_some_csv(file_path: &str) -> Result<Vec<HashMap<String, Value>>, io::Error> {
     let file = fs::File::open(file_path)?;
     let mut rdr = ReaderBuilder::new().from_reader(file);
     
@@ -34,7 +35,7 @@ pub fn read_some_csv(file_path: &String) -> Result<Vec<Map<String, Value>>, io::
     let mut records = Vec::new();
     for result in rdr.records() {
         let record = result?;
-        let mut map = Map::new(); // Using map as generic object type
+        let mut map = HashMap::new(); // Using map as generic object type
 
         // Populate the map with the field names and values
         for (header, field) in headers.iter().zip(record.iter()) {
@@ -45,7 +46,7 @@ pub fn read_some_csv(file_path: &String) -> Result<Vec<Map<String, Value>>, io::
     Ok(records)
 }
 
-pub fn write_csv<T: Serialize>(file_path: &String, records: &Vec<T>) -> Result<(), io::Error>  {
+pub fn write_csv<T: Serialize>(file_path: &str, records: &Vec<T>) -> Result<(), io::Error>  {
     // Create a CSV writer
     let file = fs::File::create(file_path)?;
     let mut wtr = Writer::from_writer(file);
@@ -54,8 +55,8 @@ pub fn write_csv<T: Serialize>(file_path: &String, records: &Vec<T>) -> Result<(
     for record in records {
         wtr.serialize(record)?;
     }
-
-    // Flush the writer to ensure all data is written
+    // Flush writer buffer into file (careful there's a trailing \n)
     wtr.flush()?;
+
     Ok(())
 }
