@@ -62,8 +62,10 @@ will execute the file
 
 
 
-## Packages to be explored
-Criterion - benchmarking app
-Atomic - numbers
-Yew - webassembly packaging
-rocket - framework for web api
+## Crates to be explored
+- Criterion - benchmarking
+- Rayon - parallelism
+- Atomic - numbers
+- Axum - back end api
+- egui - simple visuals
+- bevvy - game engine

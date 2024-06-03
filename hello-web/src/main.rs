@@ -1,14 +1,21 @@
+mod routes;
+use routes::{
+    default::hello_world,
+    user::hello_user,
+    greet::greet,
+};
 use axum::{
     Router,
     routing::get,
 };
 
-async fn hello_world() -> &'static str {
-    "Hello, World!"
-}
+
+// Define Paths here
 fn init_router() -> Router {
     Router::new()
         .route("/", get(hello_world))
+        .route("/hello/:name", get(hello_user))
+        .route("/greet", axum::routing::post(greet))
 }
 
 #[tokio::main]

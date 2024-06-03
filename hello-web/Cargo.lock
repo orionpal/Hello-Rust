@@ -188,6 +188,8 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "hyper",
+ "serde",
+ "serde_json",
  "tokio",
 ]
 
