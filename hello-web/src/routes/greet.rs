@@ -29,5 +29,8 @@ pub async fn greet(Json(payload): Json<GreetRequest>) -> impl IntoResponse {
     let response = GreetResponse {
         message: format!("Hello, {}!", payload.name),
     };
+
+
+
     (StatusCode::OK, Json(json!(response)))
 }
