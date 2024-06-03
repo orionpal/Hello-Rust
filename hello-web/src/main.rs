@@ -1,74 +1,22 @@
-#[macro_use] extern crate rocket;
-#[macro_use] extern crate diesel;
+use axum::{
+    Router,
+    routing::get,
+};
 
-mod db;
-mod models;
-mod schema;
-
-use rocket::{Rocket, Build};
-use rocket::serde::json::Json;
-use rocket::form::Form;
-use db::DbConn;
-use models::{Item, NewItem};
-use schema::items::dsl::*;
-use diesel::prelude::*;
-use rocket::response::content::Html;
-
-#[database("postgres_db")]
-struct DbConn(diesel::PgConnection);
-
-#[get("/")]
-async fn index(conn: DbConn) -> Html<String> {
-    let result = conn.run(|c| {
-        items
-            .load::<Item>(c)
-    }).await.unwrap();
-
-    let mut html = String::from(r#"
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Items</title>
-        </head>
-        <body>
-            <form method="get" action="/">
-                <input type="text" name="search" placeholder="Search">
-                <select name="sort_by">
-                    <option value="name">Name</option>
-                    <option value="description">Description</option>
-                </select>
-                <button type="submit">Search</button>
-            </form>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                </tr>
-    "#);
-
-    for item in result {
-        html.push_str(&format!(r#"
-            <tr>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-            </tr>
-        "#, item.id, item.name, item.description));
-    }
-
-    html.push_str(r#"
-            </table>
-        </body>
-        </html>
-    "#);
-
-    Html(html)
+async fn hello_world() -> &'static str {
+    "Hello, World!"
+}
+fn init_router() -> Router {
+    Router::new()
+        .route("/", get(hello_world))
 }
 
-#[launch]
-fn rocket() -> Rocket<Build> {
-    rocket::build()
-        .attach(DbConn::fairing())
-        .mount("/", routes![index])
+#[tokio::main]
+async fn main() {
+    // From https://docs.rs/axum/latest/axum/fn.serve.html
+    let port_addr = "0.0.0.0:3000"; // TODO: put this in config
+    println!("Trying to host Rust Backend at {}", port_addr);
+    let router = init_router();
+    let listener = tokio::net::TcpListener::bind(port_addr).await.unwrap();
+    axum::serve(listener, router).await.unwrap();
 }
