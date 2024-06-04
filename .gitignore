@@ -1,6 +1,10 @@
-/target
+/target/
 **/target/
 main
 main.exe
 main.pdb
 .idea
+.env
+*.env
+**/.env/
+**/.env

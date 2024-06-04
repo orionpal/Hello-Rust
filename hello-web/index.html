@@ -3,16 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>egui Web Demo</title>
+    <title>Simple API Call Example</title>
+    <style>
+        .box {
+            border: 1px solid black;
+            padding: 20px;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
-<script type="module">
-    import init, { run } from './hello-web.js';
-    async function main() {
-        await init();
-        run();
+<div class="box">
+    <h3>Test GET localhost:8080/</h3>
+    <button onclick="default_API()">Submit</button>
+</div>
+<div class="box">
+    <h3>Test GET localhost:3000/hello/</h3>
+    <label for="box2Input"></label><input type="text" id="box2Input" placeholder="Enter some text">
+    <button onclick="hello_user()">Submit</button>
+</div>
+<div class="box">
+    <h3>Test POST with some json </h3>
+    <label for="box3Input"></label><input type="text" id="box3Input" placeholder="Enter some text">
+    <button onclick="greet_user()">Submit</button>
+</div>
+
+<script>
+    function default_API() {
+        fetch("http://localhost:8080/", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                alert(`API call from http://localhost:8080/ successful! Response: ${data}`);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(`API call from http://localhost:8080/ failed.`);
+            });
     }
-    main();
+    function hello_user() {
+        const name = document.getElementById('box2Input').value;
+        const endpoint = "http://localhost:8080/hello/" + name;
+        fetch(endpoint, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                alert(`API call from ${endpoint} successful! Response: ${data}`);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(`API call from ${endpoint} failed.`);
+            });
+    }
+    function greet_user() {
+        const endpoint = "http://localhost:8080/greet";
+        const content = document.getElementById('box3Input').value;
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: content,
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                alert(`API call from ${endpoint} successful! Response: ${data}`);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(`API call from ${endpoint} failed. Double check your json looks something like { "name": "Orion" }`);
+            });
+    }
 </script>
 </body>
 </html>

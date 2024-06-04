@@ -5,7 +5,7 @@ use serde_json::json;
 async fn test_hello_world() -> Result<(), Box<dyn std::error::Error>> {
     let client = Client::new();
 
-    let res = client.get("http://localhost:3000/")
+    let res = client.get("http://localhost:8080/")
         .send()
         .await?
         .text()
@@ -19,7 +19,7 @@ async fn test_hello_world() -> Result<(), Box<dyn std::error::Error>> {
 async fn test_hello_user() -> Result<(), Box<dyn std::error::Error>> {
     let client = Client::new();
 
-    let res = client.get("http://localhost:3000/hello/Orion")
+    let res = client.get("http://localhost:8080/hello/Orion")
         .send()
         .await?
         .json::<serde_json::Value>()
@@ -32,7 +32,7 @@ async fn test_hello_user() -> Result<(), Box<dyn std::error::Error>> {
 async fn test_greet() -> Result<(), Box<dyn std::error::Error>> {
     let client = Client::new();
 
-    let res = client.post("http://localhost:3000/greet")
+    let res = client.post("http://localhost:8080/greet")
         .json(&json!({"name": "Orion"}))
         .send()
         .await?
@@ -47,7 +47,7 @@ async fn test_greet() -> Result<(), Box<dyn std::error::Error>> {
 async fn test_greet_empty_name() -> Result<(), Box<dyn std::error::Error>> {
     let client = Client::new();
 
-    let res = client.post("http://localhost:3000/greet")
+    let res = client.post("http://localhost:8080/greet")
         .json(&json!({"name": ""}))
         .send()
         .await?;
