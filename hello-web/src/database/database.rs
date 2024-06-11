@@ -1,5 +1,4 @@
 use std::env;
-use dotenv::dotenv;
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 
 pub async fn get_row() -> Result<String, sqlx::Error> {
@@ -14,17 +13,18 @@ pub async fn get_row() -> Result<String, sqlx::Error> {
 
     // TEST CODE
     // Set up the database schema
-    setup_database(&pool).await?;
-    // Insert test data
-    insert_test_data(&pool).await?;
+    // setup_database(&pool).await?;
+    // // Insert test data
+    // insert_test_data(&pool).await?;
 
     // Use the connection pool to interact with the database here
     // For example, let's run a simple query
-    let row: (i64,) = sqlx::query_as("SELECT 1")
+    let row: (i64,) = sqlx::query_as("SELECT $1")
+        .bind(150_i64)
         .fetch_one(&pool)
         .await?;
 
-    println!("Query result: {}", row.0);
+    println!("Query result: {:?}", row.0);
     Ok(row.0.to_string())
 }
 

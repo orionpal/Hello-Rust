@@ -26,8 +26,6 @@ async fn main() {
     axum::serve(listener, router).await.unwrap();
 }
 
-
-
 // Define Paths here
 fn init_router() -> Router {
     Router::new()
